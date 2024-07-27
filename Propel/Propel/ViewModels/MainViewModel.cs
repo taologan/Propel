@@ -14,7 +14,6 @@ public class MainViewModel : ViewModelBase
         ShowDialog = new Interaction<CreateLaunchViewModel, LaunchListViewModel?>();
         CreateNewLaunch = ReactiveCommand.CreateFromTask(async() =>
         {
-            //TODO
             var form = new CreateLaunchViewModel();
             var result = await ShowDialog.Handle(form);
         });
