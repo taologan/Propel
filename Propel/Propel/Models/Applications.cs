@@ -1,58 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Reactive.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using Avalonia;
-using Avalonia.Controls;
-using Microsoft.Win32;
-using Propel.Models;
-using ReactiveUI;
 
-namespace Propel.ViewModels
+namespace Propel.Models
 {
-    public class CreateLaunchViewModel : ViewModelBase
+    public class Applications
     {
-        private string? _searchText;
-        public string? SearchText
+        // public Dictionary<string, string> InstalledApps { get; private set; }
+        public ObservableCollection<string> InstalledApps { get; private set; }
+
+        public Applications()
         {
-            get => _searchText;
-            set => this.RaiseAndSetIfChanged(ref _searchText, value);
+            InstalledApps = GetInstalledApps();
         }
+        
+        public static Applications Instance { get; private set; }
 
-        private ObservableCollection<string> _installedApps;
-        public ObservableCollection<string> InstalledApps
+        static Applications()
         {
-            get => _installedApps;
-            set => this.RaiseAndSetIfChanged(ref _installedApps, value);
+            Instance = new Applications();
         }
-
-        private ObservableCollection<string> _filteredInstalledApps;
-        public ObservableCollection<string> FilteredInstalledApps
-        {
-            get => _filteredInstalledApps;
-            set => this.RaiseAndSetIfChanged(ref _filteredInstalledApps, value);
-        }
-
-        public CreateLaunchViewModel()
-        {
-            // InstalledApps = GetInstalledApps();
-            InstalledApps = new ObservableCollection<string>(Applications.Instance.InstalledApps);
-            FilteredInstalledApps = new ObservableCollection<string>(InstalledApps);
-            this.WhenAnyValue(x => x.SearchText)
-                .Throttle(TimeSpan.FromMilliseconds(400))
-                .ObserveOn(RxApp.MainThreadScheduler)
-                .Subscribe(searchQuery => FilterInstalledApps(searchQuery));
-        }
-
-        [DllImport("msi.dll", CharSet = CharSet.Auto)]
-        private static extern uint MsiEnumProducts(int iProductIndex, StringBuilder lpProductBuf);
-
-        [DllImport("msi.dll", CharSet = CharSet.Auto)]
-        private static extern uint MsiGetProductInfo(string szProduct, string szAttribute, StringBuilder lpValueBuf, ref uint pcchValueBuf);
-
+        
         private ObservableCollection<string> GetInstalledApps()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -72,21 +42,7 @@ namespace Propel.ViewModels
                 return new ObservableCollection<string>();
             }
         }
-
-        private void FilterInstalledApps(string? searchQuery)
-        {
-            if (string.IsNullOrEmpty(searchQuery))
-            {
-                FilteredInstalledApps = new ObservableCollection<string>(InstalledApps);
-            }
-            else
-            {
-                var filtered = InstalledApps
-                    .Where(app => app.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
-                    .ToList();
-                FilteredInstalledApps = new ObservableCollection<string>(filtered);
-            }
-        }
+        
 
         private ObservableCollection<string> GetInstalledAppsWindows()
         {
@@ -135,6 +91,12 @@ namespace Propel.ViewModels
             var apps = new ObservableCollection<string>();
             //Need to implement in the future
             return apps;
+        }
+
+        private class AppInfo
+        {
+            public string Name { get; set; }
+            public string Path { get; set; }
         }
     }
 }
