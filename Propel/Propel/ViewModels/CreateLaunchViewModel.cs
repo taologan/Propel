@@ -9,6 +9,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using Propel.Models;
+using Propel.Views;
 using ReactiveUI;
 
 namespace Propel.ViewModels
@@ -28,8 +29,15 @@ namespace Propel.ViewModels
         public ReactiveCommand<Unit, Unit> SaveLaunchCommand { get; }
         public ReactiveCommand<Launch, Unit> LaunchAppsCommand { get; }
 
-        public ReactiveCommand<Unit, ObservableCollection<Launch>> CreateLaunchCommand { get; }
-        
+        public ReactiveCommand<Unit, LaunchViewModel> CreateLaunchCommand { get; }
+
+        private LaunchViewModel? _launch;
+
+        public LaunchViewModel? Launch
+        {
+            get => _launch;
+            set => this.RaiseAndSetIfChanged(ref _launch, value);
+        }
         public CreateLaunchViewModel()
         {
             Launches = new ObservableCollection<Launch>();
@@ -38,7 +46,7 @@ namespace Propel.ViewModels
             LaunchAppsCommand = ReactiveCommand.Create<Launch>(LaunchApps);
             CreateLaunchCommand = ReactiveCommand.Create(() =>
             {
-                return Launches;
+                return _launch;
             });
         }
 
