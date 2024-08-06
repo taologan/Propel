@@ -9,6 +9,7 @@ public partial class CreateLaunchView : UserControl
     public CreateLaunchView()
     {
         InitializeComponent();
+        // this.WhenActivated(action => action(ViewModel!.CreateLaunchCommand.Subscribe(Close)));
     }
     
         

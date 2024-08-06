@@ -3,17 +3,39 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:Propel.ViewModels"
+             xmlns:converters="clr-namespace:Propel.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Propel.Views.CreateLaunchView"
-             x:DataType="viewModels:CreateLaunchViewModel">
+             x:DataType="viewModels:CreateLaunchViewModel"
+             >
+    <UserControl.Resources>
+        <converters:StringToBooleanConverter x:Key="StringToBooleanConverter" />
+    </UserControl.Resources>
     <DockPanel>
         <StackPanel DockPanel.Dock="Top">
-            <TextBox Text = "{Binding SearchText}" Watermark="Search for Apps"/>
+            <TextBox Text="{Binding LaunchName}" Watermark="Enter Launch Name" />
+            <Button Content="Select Applications"
+                    Command="{Binding OpenFileDialogCommand}"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Button Content="Save Launch"
+                    Command="{Binding SaveLaunchCommand}"
+                    IsEnabled="{Binding LaunchName, Converter={StaticResource StringToBooleanConverter}}"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
-        <Button Content="Create Launch"
-                DockPanel.Dock="Bottom"
-                HorizontalAlignment="Center" />
-        <!-- <ItemsControl ItemsSource="{Binding InstalledApps}"></ItemsControl> -->
-        <ListBox ItemsSource="{Binding FilteredInstalledApps}"></ListBox>
+        <ItemsControl ItemsSource="{Binding Launches}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}" Margin="5"/>
+                        <TextBlock Text = "{Binding PathString}"/>
+                        <Button Content="Launch"
+                                Command="{Binding LaunchApps}"
+                                CommandParameter="{Binding}"
+                                Margin="5"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Button Content="wejfwjfwi" Command = "{Binding CreateLaunchCommand}"/>
     </DockPanel>
 </UserControl>

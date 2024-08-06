@@ -14,12 +14,12 @@ public partial class MainWindow : ReactiveWindow<MainViewModel>
         this.WhenActivated(action => action(ViewModel!.ShowDialog.RegisterHandler(DoShowDialogAsync)));
     }
     private async Task DoShowDialogAsync(InteractionContext<CreateLaunchViewModel,
-        LaunchListViewModel?> interaction)
+        LaunchViewModel?> interaction)
     {
         var dialog = new CreateLaunchWindow();
         dialog.DataContext = interaction.Input;
     
-        var result = await dialog.ShowDialog<LaunchListViewModel?>(this);
+        var result = await dialog.ShowDialog<LaunchViewModel?>(this);
         interaction.SetOutput(result);
     }
     

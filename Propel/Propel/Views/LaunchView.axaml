@@ -1,0 +1,19 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:Propel.Models"
+             xmlns:viewModels="clr-namespace:Propel.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Propel.Views.LaunchView"
+             x:DataType="viewModels:LaunchViewModel">
+        
+    <StackPanel Spacing = "5" Width = "150">
+        <Border CornerRadius="20" ClipToBounds="True">
+            <Panel Background="#7FFF22DD">
+                <TextBlock>Hello</TextBlock>
+                <Button Content="Launch" Command = "{Binding LaunchApps}"/>
+            </Panel>
+        </Border>
+    </StackPanel>
+</UserControl>
