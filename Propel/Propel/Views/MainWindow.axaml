@@ -13,36 +13,35 @@
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
         WindowStartupLocation="CenterScreen">
-        <Panel>
-                <ExperimentalAcrylicBorder IsHitTestVisible="False">
-                        <ExperimentalAcrylicBorder.Material>
-                                <ExperimentalAcrylicMaterial
-                                        BackgroundSource="Digger"
-                                        TintColor="Black"
-                                        TintOpacity="0.5"
-                                        MaterialOpacity="0.25" />
-                        </ExperimentalAcrylicBorder.Material>
-                </ExperimentalAcrylicBorder>
-                
-                <Panel Margin="10">
-                        <Button HorizontalAlignment="Center" 
-                                Content="Create New Launch"
-                                Command = "{Binding CreateNewLaunch}">
-                        </Button>
-                </Panel>
-                <ItemsControl ItemsSource="{Binding Launches}">
-                        <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                        <WrapPanel />
-                                </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                        <views:LaunchView/>
-                                </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                
-        </Panel>
-        
+    <Grid>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="0.5"
+                    MaterialOpacity="0.25" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+
+        <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Button HorizontalAlignment="Center"
+                    Content="Create New Launch"
+                    Command="{Binding CreateNewLaunch}">
+            </Button>
+        </StackPanel>
+
+        <ItemsControl ItemsSource="{Binding Launches}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <views:LaunchView Margin="10"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
 </Window>

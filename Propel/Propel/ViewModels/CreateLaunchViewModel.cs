@@ -85,8 +85,6 @@ namespace Propel.ViewModels
         private void SaveLaunch()
         {
             Console.WriteLine($"Launch '{LaunchName}' saved.");
-
-            // Create a new LaunchViewModel and set the Launch property
             var launch = new Launch { Name = LaunchName, FilePaths = new ObservableCollection<string>(Launches.SelectMany(l => l.FilePaths)) };
             Launch = new LaunchViewModel(launch);
         }

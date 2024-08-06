@@ -101,6 +101,14 @@ namespace Propel.Models
             }
         }
 
+        public void DeleteLaunch()
+        {
+            if (File.Exists(CachePath))
+            {
+                File.Delete(CachePath);
+            }
+        }
+
         private static async Task SaveToStreamAsync(Launch launch, Stream stream)
         {
             await JsonSerializer.SerializeAsync(stream, launch).ConfigureAwait(false);

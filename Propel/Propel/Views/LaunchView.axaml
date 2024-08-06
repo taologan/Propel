@@ -8,11 +8,16 @@
              x:Class="Propel.Views.LaunchView"
              x:DataType="viewModels:LaunchViewModel">
         
-    <StackPanel Spacing = "5" Width = "150">
-        <Border CornerRadius="20" ClipToBounds="True">
+    <StackPanel Spacing="5" Width="150">
+        <Border CornerRadius="10" ClipToBounds="True" Width="150" Height="150">
             <Panel Background="#7FFF22DD">
-                <TextBlock>Hello</TextBlock>
-                <Button Content="Launch" Command = "{Binding LaunchApps}"/>
+                <Border Margin="10">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="5">
+                        <TextBlock Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Text = "{Binding Name}"/>
+                        <Button Content="Launch" Command="{Binding LaunchApps}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Button Content = "Delete" Command = "{Binding DeleteLaunch}"/>
+                    </StackPanel>
+                </Border>
             </Panel>
         </Border>
     </StackPanel>
