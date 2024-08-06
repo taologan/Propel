@@ -15,8 +15,8 @@ public class LaunchViewModel : ViewModelBase
     }
 
     public string PathString => _launch.ToString();
-    private string name => _launch.Name;
-    private ObservableCollection<string> _filePaths => _launch.FilePaths;
+    public string Name => _launch.Name;
+    private ObservableCollection<string> FilePaths => _launch.FilePaths;
 
     public void LaunchApps()
     {
@@ -26,5 +26,10 @@ public class LaunchViewModel : ViewModelBase
     {
         await _launch.SaveData();
     }
-    
+
+    public void DeleteLaunch()
+    {
+        _launch.DeleteLaunch();
+    }
+
 }
