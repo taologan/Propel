@@ -23,9 +23,10 @@
                     MaterialOpacity="0.25" />
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-        <StackPanel>
+        <StackPanel VerticalAlignment="Bottom" Margin="20">
             <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <Button HorizontalAlignment="Center"
+                <Button HorizontalAlignment="Center" Width="350" Height="30"
+                        HorizontalContentAlignment="Center"
                         Content="Create New Launch"
                         Command="{Binding CreateNewLaunch}">
                 </Button>

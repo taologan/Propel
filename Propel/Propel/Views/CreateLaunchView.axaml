@@ -18,24 +18,24 @@
                     Command="{Binding OpenFileDialogCommand}"
                     HorizontalAlignment="Center" VerticalAlignment="Center" />
             <Button Content="Save Launch"
-                    Command="{Binding SaveLaunchCommand}"
+                    Command="{Binding CreateLaunchCommand}"
                     IsEnabled="{Binding LaunchName, Converter={StaticResource StringToBooleanConverter}}"
                     HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
         <ItemsControl ItemsSource="{Binding Launches}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <TextBlock Text="{Binding Name}" Margin="5"/>
                         <TextBlock Text = "{Binding PathString}"/>
-                        <Button Content="Launch"
-                                Command="{Binding LaunchApps}"
-                                CommandParameter="{Binding}"
-                                Margin="5"/>
+                        <!-- <Button Content="Launch" -->
+                        <!--         Command="{Binding LaunchApps}" -->
+                        <!--         CommandParameter="{Binding}" -->
+                        <!--         Margin="5"/> -->
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Button Content="wejfwjfwi" Command = "{Binding CreateLaunchCommand}"/>
+        <!-- <Button Content="Apply" Command = "{Binding CreateLaunchCommand}"/> -->
     </DockPanel>
 </UserControl>

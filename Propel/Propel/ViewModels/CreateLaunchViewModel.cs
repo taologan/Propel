@@ -42,7 +42,7 @@ namespace Propel.ViewModels
         {
             Launches = new ObservableCollection<Launch>();
             OpenFileDialogCommand = ReactiveCommand.CreateFromTask(OpenFileDialogAsync);
-            SaveLaunchCommand = ReactiveCommand.Create(SaveLaunch);
+            // SaveLaunchCommand = ReactiveCommand.Create(SaveLaunch);
             LaunchAppsCommand = ReactiveCommand.Create<Launch>(LaunchApps);
             CreateLaunchCommand = ReactiveCommand.Create(() => Launch);
         }
@@ -79,14 +79,16 @@ namespace Propel.ViewModels
                 {
                     Launches.Add(launch);
                 }
+                var launchviewmodel = new Launch { Name = LaunchName, FilePaths = new ObservableCollection<string>(Launches.SelectMany(l => l.FilePaths)) };
+                Launch = new LaunchViewModel(launchviewmodel);
             }
         }
-
         private void SaveLaunch()
         {
             Console.WriteLine($"Launch '{LaunchName}' saved.");
             var launch = new Launch { Name = LaunchName, FilePaths = new ObservableCollection<string>(Launches.SelectMany(l => l.FilePaths)) };
             Launch = new LaunchViewModel(launch);
+            // return Launch;
         }
 
         private void LaunchApps(Launch launch)

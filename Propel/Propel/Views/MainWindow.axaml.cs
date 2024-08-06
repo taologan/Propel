@@ -12,6 +12,7 @@ public partial class MainWindow : ReactiveWindow<MainViewModel>
     {
         InitializeComponent();
         this.WhenActivated(action => action(ViewModel!.ShowDialog.RegisterHandler(DoShowDialogAsync)));
+        this.WindowState = WindowState.FullScreen;
     }
     private async Task DoShowDialogAsync(InteractionContext<CreateLaunchViewModel,
         LaunchViewModel?> interaction)
