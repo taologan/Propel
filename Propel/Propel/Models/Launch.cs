@@ -5,13 +5,14 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Propel.Models
 {
     public class Launch : INotifyPropertyChanged
     {
         public string PathString => ToString();
-
         private string _name;
         public string Name
         {
@@ -84,6 +85,49 @@ namespace Propel.Models
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private string CachePath => $"./Cache/{_name}";
+        public async Task SaveData()
+        {
+            if (!Directory.Exists("./Cache"))
+            {
+                Directory.CreateDirectory("./Cache");
+            }
+
+            using (var file = File.OpenWrite(CachePath))
+            {
+                await SaveToStreamAsync(this, file);
+            }
+        }
+
+        private static async Task SaveToStreamAsync(Launch launch, Stream stream)
+        {
+            await JsonSerializer.SerializeAsync(stream, launch).ConfigureAwait(false);
+        }
+
+        public static async Task<Launch> LoadFromStream(Stream stream)
+        {
+            return (await JsonSerializer.DeserializeAsync<Launch>(stream).ConfigureAwait(false));
+        }
+        public static async Task<IEnumerable<Launch>> LoadCachedAsync()
+        {
+            if (!Directory.Exists("./Cache"))
+            {
+                Directory.CreateDirectory("./Cache");
+            }
+
+            var results = new List<Launch>();
+
+            foreach (var file in Directory.EnumerateFiles("./Cache"))
+            {
+                if (!string.IsNullOrWhiteSpace(new DirectoryInfo(file).Extension)) continue;
+
+                await using var fs = File.OpenRead(file);
+                results.Add(await Launch.LoadFromStream(fs).ConfigureAwait(false));
+            }
+
+            return results;
         }
     }
 }
